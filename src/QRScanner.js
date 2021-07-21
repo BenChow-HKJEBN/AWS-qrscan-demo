@@ -12,7 +12,9 @@ import {
 
 
 /**
- * Creates a QR scanner plugin which will actively scan for QR codes and use graphQL to insert into a DB
+ * Creates a QR scanner plugin which will actively scan for QR codes
+ * 
+ * @author bhalkett
  */
 class QRScanner extends Component {
 
@@ -34,8 +36,6 @@ class QRScanner extends Component {
         this.startScanning = this.startScanning.bind(this);
         this.startClick = this.startClick.bind(this);
         this.changeDevice = this.changeDevice.bind(this);
-        
-        //const codeReader = new BrowserMultiFormatReader();
     }
 
     componentDidMount() {
@@ -137,8 +137,7 @@ class QRScanner extends Component {
 
     /**
      * Starts decode process by running the browser reader QR video decode. Runs async. If a code is found when scanning it will
-     * pass the result and verify that it is a correct QR code via graphQL. If so it will insert a value using the user AUTH attribute
-     * into the DB via graphQL
+     * display the result
      * @param {*} selectedDeviceId is the deviceID to use for decode process
      */
     decodeContinuously(selectedDeviceId) {
@@ -147,11 +146,7 @@ class QRScanner extends Component {
           selectedDeviceId,
           'video',
           async (result, err) => {
-            //console.log(await this.state.codeReader.listVideoInputDevices());
-            //let code = await this.state.codeReader.listVideoInputDevices();
-            //console.log(code[0].label +" "+code[1].label);
-            //this.setState({code: code[0].label +" "+code[1].label});
-            //this.setState({isPopup: true});
+
               //check for undefined camera - iOS
             if(typeof(selectedDeviceId) === 'undefined'){
                 this.state.codeReader
@@ -176,7 +171,6 @@ class QRScanner extends Component {
             if (err) {
     
               if (err instanceof NotFoundException) {
-                //console.log('No QR code found.');
               }
     
               if (err instanceof ChecksumException) {
@@ -189,17 +183,17 @@ class QRScanner extends Component {
             }
           }
         );
-      }//<video id="video" playsinline="true" style={{display: block}}/>
+      }
     
     render() {
 
                 var myDialog = {
                     backgroundColor: '#3399ff',
                     color: '#ffffff',
-                    width: '50%',
+                    width: '25%',
                     height: '10%',
                     borderRadius: '8px',
-                    minHeight: '200px',
+                    minHeight: '100px',
                     fontFamily: 'Open Sans', 
                   };
 
